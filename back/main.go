@@ -4,6 +4,19 @@ import (
 	"net/http"
 
 	"github.com/V-enekoder/GasManager/config"
+	commerce "github.com/V-enekoder/GasManager/src/Commerce"
+	council "github.com/V-enekoder/GasManager/src/Council"
+	delivery "github.com/V-enekoder/GasManager/src/Delivery"
+	disabled "github.com/V-enekoder/GasManager/src/Disabled"
+	municipality "github.com/V-enekoder/GasManager/src/Municipality"
+	order "github.com/V-enekoder/GasManager/src/Order"
+	orderstate "github.com/V-enekoder/GasManager/src/OrderState"
+	payment "github.com/V-enekoder/GasManager/src/Payment"
+	paymentstate "github.com/V-enekoder/GasManager/src/PaymentState"
+	report "github.com/V-enekoder/GasManager/src/Report"
+	reporttype "github.com/V-enekoder/GasManager/src/ReportType"
+	typecylinder "github.com/V-enekoder/GasManager/src/TypeCylinder"
+	user "github.com/V-enekoder/GasManager/src/User"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -23,5 +36,19 @@ func main() {
 			"message": "pong",
 		})
 	})
+	commerce.RegisterRoutes(r)
+	council.RegisterRoutes(r)
+	delivery.RegisterRoutes(r)
+	disabled.RegisterRoutes(r)
+	municipality.RegisterRoutes(r)
+	order.RegisterRoutes(r)
+	orderstate.RegisterRoutes(r)
+	payment.RegisterRoutes(r)
+	paymentstate.RegisterRoutes(r)
+	report.RegisterRoutes(r)
+	reporttype.RegisterRoutes(r)
+	typecylinder.RegisterRoutes(r)
+	user.RegisterRoutes(r)
+
 	r.Run()
 }

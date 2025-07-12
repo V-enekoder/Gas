@@ -91,14 +91,14 @@ type Commerce struct {
 
 type Order struct {
 	gorm.Model
-	UserID       uint          `gorm:"not null"`
-	TotalPrice   float64       `gorm:"not null"`
-	StateOrderID uint          `gorm:"not null"`
+	UserID       uint    `gorm:"not null"`
+	TotalPrice   float64 `gorm:"not null"`
+	StateOrderID uint    `gorm:"not null"`
+
 	User         User          `gorm:"foreignKey:UserID"`
 	OrderState   OrderState    `gorm:"foreignKey:StateOrderID"`
 	OrderDetails []OrderDetail `gorm:"foreignKey:OrderID"`
-
-	Delivery *Delivery `gorm:"foreignKey:OrderID"`
+	Delivery     *Delivery     `gorm:"foreignKey:OrderID"`
 }
 
 type OrderDetail struct {
@@ -113,7 +113,7 @@ type OrderDetail struct {
 }
 
 type Delivery struct {
-	ID         uint    `gorm:"primaryKey"`
+	gorm.Model
 	OrderID    uint    `gorm:"unique;not null"`
 	PaymentID  uint    `gorm:"unique;not null"`
 	TotalPrice float64 `gorm:"not null"`
@@ -146,11 +146,12 @@ type Report struct {
 }
 
 type Payment struct {
-	ID           uint         `gorm:"primaryKey"`
-	Quantity     float64      `gorm:"not null"`
-	StateID      uint         `gorm:"not null"`
-	Date         time.Time    `gorm:"not null"`
-	PaymentState PaymentState `gorm:"foreignKey:StateID"`
+	gorm.Model
+	UserID   uint    `gorm:"not null"`
+	Quantity float64 `gorm:"not null"`
+	StateID  uint    `gorm:"not null"`
 
-	Delivery *Delivery `gorm:"foreignKey:PaymentID"`
+	User         User         `gorm:"foreignKey:UserID"`
+	PaymentState PaymentState `gorm:"foreignKey:StateID"`
+	Delivery     *Delivery    `gorm:"foreignKey:PaymentID"`
 }

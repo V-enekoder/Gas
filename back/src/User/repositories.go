@@ -26,6 +26,27 @@ func CreateUserRepository(user *schema.User) error {
 	return db.Create(user).Error
 }
 
+func GetUserByIDWithRelationsRepository(id uint) (schema.User, error) {
+	var user schema.User
+	db := config.DB
+	// Usamos Preload para cargar los datos de la tabla relacionada "Municipality"
+	err := db.Preload("Municipality").First(&user, id).Error
+	return user, err
+}
+
+func GetUserByEmailWithRelationsRepository(email string) (schema.User, error) {
+	var user schema.User
+	db := config.DB
+	// Usamos Preload para cargar todas las posibles relaciones de rol en una sola consulta.
+	err := db.
+		Preload("Commerce").
+		Preload("Council").
+		Preload("Disabled").
+		Where("email = ?", email).
+		First(&user).Error
+	return user, err
+}
+
 func GetAllUsersRepository() ([]schema.User, error) {
 	var users []schema.User
 	db := config.DB

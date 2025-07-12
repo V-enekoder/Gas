@@ -2,7 +2,6 @@ package delivery
 
 import (
 	"errors"
-	"time"
 
 	"github.com/V-enekoder/GasManager/src/schema"
 	"gorm.io/gorm"
@@ -41,7 +40,6 @@ func mapToDeliveryResponseDTO(d schema.Delivery) DeliveryResponseDTO {
 		Payment: PaymentInDeliveryResponseDTO{
 			ID:       d.Payment.ID,
 			Quantity: d.Payment.Quantity,
-			Date:     d.Payment.Date,
 		},
 		DeliveryDetails: detailsDTO,
 	}
@@ -82,7 +80,6 @@ func CreateDeliveryService(dto DeliveryCreateDTO) (DeliveryResponseDTO, error) {
 	newPayment := schema.Payment{
 		Quantity: newDelivery.TotalPrice,
 		StateID:  DefaultPaymentStateID,
-		Date:     time.Now(),
 	}
 
 	// Crear todo en una transacción

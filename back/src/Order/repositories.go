@@ -13,25 +13,9 @@ func GetTypeCylinderForOrder(tx *gorm.DB, id uint) (schema.TypeCylinder, error) 
 	return cylinder, err
 }
 
-// CreateOrderRepository crea una orden y sus detalles dentro de una transacción.
 func CreateOrderRepository(order *schema.Order) error {
 	db := config.DB
-	return db.Transaction(func(tx *gorm.DB) error {
-		// 1. Crear la Orden principal
-		if err := tx.Create(order).Error; err != nil {
-			return err
-		}
-
-		// 2. Crear los Detalles de la Orden, asignando el OrderID recién creado
-		for i := range order.OrderDetails {
-			order.OrderDetails[i].OrderID = order.ID
-			if err := tx.Create(&order.OrderDetails[i]).Error; err != nil {
-				return err
-			}
-		}
-
-		return nil
-	})
+	return db.Create(order).Error
 }
 
 // GetAllOrdersRepository obtiene todas las órdenes con sus relaciones precargadas.
@@ -55,4 +39,21 @@ func GetOrderByIDRepository(id uint) (schema.Order, error) {
 		Preload("OrderDetails.TypeCylinder").
 		First(&order, id).Error
 	return order, err
+}
+
+func GetOrdersByUserIDRepository(userID uint) ([]schema.Order, error) {
+	// 1. Declara una slice de órdenes, no una sola.
+	var orders []schema.Order
+	db := config.DB
+
+	// 2. Usa Where() para filtrar por user_id y Find() para obtener múltiples registros.
+	err := db.
+		Preload("OrderState").                // Precarga el estado de cada orden
+		Preload("OrderDetails").              // Precarga los detalles de cada orden
+		Preload("OrderDetails.TypeCylinder"). // Precarga el tipo de cilindro DENTRO de cada detalle
+		Where("user_id = ?", userID).         // La condición de filtrado clave
+		Order("created_at DESC").             // Opcional: ordena las órdenes de la más nueva a la más antigua
+		Find(&orders).Error                   // Busca todos los registros que coincidan y los carga en la slice
+
+	return orders, err
 }

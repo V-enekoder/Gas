@@ -23,3 +23,12 @@ func GetPaymentByIDRepository(id uint) (schema.Payment, error) {
 	err := db.Preload("PaymentState").Preload("Delivery").First(&payment, id).Error
 	return payment, err
 }
+
+func GetPaymentByUserIDRepository(id uint) ([]schema.Payment, error) {
+	var payments []schema.Payment
+	db := config.DB
+	err := db.Preload("PaymentState").
+		Preload("Delivery").
+		Where("user_id = ?", id).Find(&payments).Error
+	return payments, err
+}

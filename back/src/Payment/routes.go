@@ -8,5 +8,6 @@ func RegisterRoutes(router *gin.Engine) {
 		payments.POST("/", CreatePaymentController)
 		payments.GET("/", GetAllPaymentsController)
 		payments.GET("/:id", GetPaymentByIDController)
+		payments.GET("/:id/user", GetPaymentByUserIDController)
 	}
 }

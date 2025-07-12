@@ -7,6 +7,8 @@ func RegisterRoutes(router *gin.Engine) {
 	{
 		orders.POST("/", CreateOrderController)
 		orders.GET("/", GetAllOrdersController)
+		orders.GET("/:id/user", GetOrdersByUserIDController)
 		orders.GET("/:id", GetOrderByIDController)
+
 	}
 }

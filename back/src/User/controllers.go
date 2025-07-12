@@ -9,6 +9,67 @@ import (
 	"gorm.io/gorm"
 )
 
+func RegisterController(c *gin.Context) {
+	var dto RegisterRequestDTO
+
+	// 1. El DTO de la petición no ha cambiado.
+	if err := c.ShouldBindJSON(&dto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	_, err := RegisterUserService(dto)
+	if err != nil {
+		// 3. El manejo de errores no ha cambiado.
+		if errors.Is(err, ErrEmailExists) {
+			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		return
+	}
+
+	var logindto LoginRequestDTO = LoginRequestDTO{
+		Email:    dto.Email,
+		Password: dto.Password,
+	}
+
+	response, err := LoginUserService(logindto)
+	if err != nil {
+		if errors.Is(err, ErrInvalidCredentials) || errors.Is(err, ErrUserInactive) {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Login failed"})
+		return
+	}
+
+	// 4. Gin toma el objeto 'response' (con su nueva estructura)
+	//    y lo convierte a JSON automáticamente.
+	c.JSON(http.StatusCreated, response)
+}
+
+func LoginController(c *gin.Context) {
+	var dto LoginRequestDTO
+
+	if err := c.ShouldBindJSON(&dto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	response, err := LoginUserService(dto)
+	if err != nil {
+		if errors.Is(err, ErrInvalidCredentials) || errors.Is(err, ErrUserInactive) {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Login failed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
 func CreateUserController(c *gin.Context) {
 	var dto UserCreateDTO
 	if err := c.ShouldBindJSON(&dto); err != nil {

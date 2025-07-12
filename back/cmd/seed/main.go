@@ -373,9 +373,9 @@ func SeedDeliveries(db *gorm.DB) error {
 	err = db.Transaction(func(tx *gorm.DB) error {
 		// a. Crear el Pago por el valor REAL de la entrega.
 		payment := schema.Payment{
+			UserID:   1,
 			Quantity: deliveryTotalPrice,
 			StateID:  verifiedPaymentState.ID,
-			Date:     time.Now(),
 		}
 		if err := tx.Create(&payment).Error; err != nil {
 			return err

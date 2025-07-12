@@ -116,3 +116,18 @@ func GetOrderByIDService(id uint) (OrderResponseDTO, error) {
 	}
 	return mapToOrderResponseDTO(order), nil
 }
+
+func GetOrdersByUserIDService(id uint) ([]OrderResponseDTO, error) {
+	orders, err := GetOrdersByUserIDRepository(id)
+	if err != nil {
+		return []OrderResponseDTO{}, err
+	}
+
+	var ordersDTO []OrderResponseDTO
+
+	for _, order := range orders {
+		ordersDTO = append(ordersDTO, mapToOrderResponseDTO(order))
+	}
+
+	return ordersDTO, nil
+}
