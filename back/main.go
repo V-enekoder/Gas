@@ -14,6 +14,7 @@ import (
 	payment "github.com/V-enekoder/GasManager/src/Payment"
 	paymentstate "github.com/V-enekoder/GasManager/src/PaymentState"
 	report "github.com/V-enekoder/GasManager/src/Report"
+	reportstate "github.com/V-enekoder/GasManager/src/ReportState"
 	reporttype "github.com/V-enekoder/GasManager/src/ReportType"
 	typecylinder "github.com/V-enekoder/GasManager/src/TypeCylinder"
 	user "github.com/V-enekoder/GasManager/src/User"
@@ -47,6 +48,7 @@ func main() {
 	paymentstate.RegisterRoutes(r)
 	report.RegisterRoutes(r)
 	reporttype.RegisterRoutes(r)
+	reportstate.RegisterRoutes(r)
 	typecylinder.RegisterRoutes(r)
 	user.RegisterRoutes(r)
 

@@ -13,6 +13,7 @@ func mapToPaymentResponseDTO(p schema.Payment) PaymentResponseDTO {
 	return PaymentResponseDTO{
 		ID:       p.ID,
 		UserID:   p.UserID,
+		OrderID:  p.OrderID,
 		Quantity: p.Quantity,
 		PaymentState: PaymentStateInPaymentResponseDTO{
 			ID:   p.PaymentState.ID,
@@ -25,8 +26,9 @@ func mapToPaymentResponseDTO(p schema.Payment) PaymentResponseDTO {
 func CreatePaymentService(dto PaymentCreateDTO) (PaymentResponseDTO, error) {
 	newPayment := schema.Payment{
 		UserID:   dto.UserID,
+		OrderID:  dto.OrderID,
 		Quantity: dto.Quantity,
-		StateID:  dto.StateID,
+		StateID:  1,
 	}
 
 	if err := CreatePaymentRepository(&newPayment); err != nil {

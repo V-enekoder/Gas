@@ -55,3 +55,23 @@ func GetReportByIDController(c *gin.Context) {
 
 	c.JSON(http.StatusOK, report)
 }
+
+func GetReportByUserIDController(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		return
+	}
+
+	report, err := GetReportByUserIDService(uint(id))
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Report not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve report"})
+		return
+	}
+
+	c.JSON(http.StatusOK, report)
+}

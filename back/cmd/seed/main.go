@@ -374,6 +374,7 @@ func SeedDeliveries(db *gorm.DB) error {
 		// a. Crear el Pago por el valor REAL de la entrega.
 		payment := schema.Payment{
 			UserID:   1,
+			OrderID:  commerceOrder.ID,
 			Quantity: deliveryTotalPrice,
 			StateID:  verifiedPaymentState.ID,
 		}

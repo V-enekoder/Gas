@@ -125,7 +125,7 @@ type Delivery struct {
 }
 
 type DeliveryDetail struct {
-	ID             uint         `gorm:"primaryKey"`
+	gorm.Model
 	DeliveryID     uint         `gorm:"not null"`
 	TypeCylinderID uint         `gorm:"not null"`
 	Quantity       int          `gorm:"not null"`
@@ -134,24 +134,29 @@ type DeliveryDetail struct {
 }
 
 type Report struct {
-	ID            uint        `gorm:"primaryKey"`
-	DeliveryID    uint        `gorm:"not null"`
-	Description   string      `gorm:"type:text;not null"`
-	Date          time.Time   `gorm:"not null"`
-	TypeID        uint        `gorm:"not null"`
-	ReportStateID uint        `gorm:"not null"`
-	Delivery      Delivery    `gorm:"foreignKey:DeliveryID"`
-	ReportType    ReportType  `gorm:"foreignKey:TypeID"`
-	ReportState   ReportState `gorm:"foreignKey:ReportStateID"`
+	gorm.Model
+	DeliveryID    uint      `gorm:"not null"`
+	UserID        uint      `gorm:"not null"`
+	Description   string    `gorm:"type:text;not null"`
+	Date          time.Time `gorm:"not null"`
+	TypeID        uint      `gorm:"not null"`
+	ReportStateID uint      `gorm:"not null"`
+
+	User        User        `gorm:"foreignKey:UserID"`
+	Delivery    Delivery    `gorm:"foreignKey:DeliveryID"`
+	ReportType  ReportType  `gorm:"foreignKey:TypeID"`
+	ReportState ReportState `gorm:"foreignKey:ReportStateID"`
 }
 
 type Payment struct {
 	gorm.Model
 	UserID   uint    `gorm:"not null"`
+	OrderID  uint    `gorm:"not null"`
 	Quantity float64 `gorm:"not null"`
 	StateID  uint    `gorm:"not null"`
 
 	User         User         `gorm:"foreignKey:UserID"`
+	Order        Order        `gorm:"foreignKey:OrderID"`
 	PaymentState PaymentState `gorm:"foreignKey:StateID"`
 	Delivery     *Delivery    `gorm:"foreignKey:PaymentID"`
 }

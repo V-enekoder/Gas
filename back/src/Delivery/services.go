@@ -65,6 +65,7 @@ func CreateDeliveryService(dto DeliveryCreateDTO) (DeliveryResponseDTO, error) {
 	// Preparar el nuevo Delivery
 	newDelivery := schema.Delivery{
 		OrderID:    sourceOrder.ID,
+		PaymentID:  dto.PaymentID,
 		TotalPrice: sourceOrder.TotalPrice,
 	}
 
@@ -77,13 +78,13 @@ func CreateDeliveryService(dto DeliveryCreateDTO) (DeliveryResponseDTO, error) {
 	}
 
 	// Preparar el pago asociado al Delivery
-	newPayment := schema.Payment{
+	/*newPayment := schema.Payment{
 		Quantity: newDelivery.TotalPrice,
 		StateID:  DefaultPaymentStateID,
-	}
+	}*/
 
 	// Crear todo en una transacción
-	if err := CreateDeliveryAndAssociationsRepository(&newDelivery, &newPayment); err != nil {
+	if err := CreateDeliveryRepository(&newDelivery); err != nil {
 		return DeliveryResponseDTO{}, err
 	}
 
@@ -115,4 +116,18 @@ func GetDeliveryByIDService(id uint) (DeliveryResponseDTO, error) {
 		return DeliveryResponseDTO{}, err
 	}
 	return mapToDeliveryResponseDTO(delivery), nil
+}
+
+func GetDeliveriesByUserIDService(id uint) ([]DeliveryResponseDTO, error) {
+	deliveries, err := GetDeliveriesByUserIDRepository(id)
+	if err != nil {
+		return []DeliveryResponseDTO{}, err
+	}
+
+	var deliveriesDTO []DeliveryResponseDTO
+	for _, d := range deliveries {
+		deliveriesDTO = append(deliveriesDTO, mapToDeliveryResponseDTO(d))
+	}
+
+	return deliveriesDTO, nil
 }

@@ -3,6 +3,7 @@ package report
 import "time"
 
 type ReportCreateDTO struct {
+	UserID        uint   `json:"user_id" binding:"required"`
 	DeliveryID    uint   `json:"delivery_id" binding:"required"`
 	Description   string `json:"description" binding:"required"`
 	TypeID        uint   `json:"type_id" binding:"required"`
@@ -26,6 +27,7 @@ type DeliveryInReportResponseDTO struct {
 
 type ReportResponseDTO struct {
 	ID          uint                        `json:"id"`
+	UserID      uint                        `json:"user_id"`
 	Description string                      `json:"description"`
 	Date        time.Time                   `json:"date"`
 	Delivery    DeliveryInReportResponseDTO `json:"delivery"`

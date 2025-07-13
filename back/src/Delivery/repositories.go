@@ -28,27 +28,27 @@ func GetSourceOrderByIDRepository(id uint) (schema.Order, error) {
 	return order, err
 }
 
-func CreateDeliveryAndAssociationsRepository(delivery *schema.Delivery, payment *schema.Payment) error {
+func CreateDeliveryRepository(delivery *schema.Delivery) error {
 	db := config.DB
 	return db.Transaction(func(tx *gorm.DB) error {
 		// 1. Crear el Pago asociado.
-		if err := tx.Create(payment).Error; err != nil {
+		/*if err := tx.Create(payment).Error; err != nil {
 			return err
 		}
 
 		// 2. Asignar el ID del pago al delivery y crear el delivery.
-		delivery.PaymentID = payment.ID
+		delivery.PaymentID = payment.ID*/
 		if err := tx.Create(delivery).Error; err != nil {
 			return err
 		}
 
 		// 3. Crear los Detalles del Delivery, asignando el DeliveryID recién creado.
-		for i := range delivery.DeliveryDetails {
+		/*for i := range delivery.DeliveryDetails {
 			delivery.DeliveryDetails[i].DeliveryID = delivery.ID
 			if err := tx.Create(&delivery.DeliveryDetails[i]).Error; err != nil {
 				return err
 			}
-		}
+		}*/
 
 		return nil
 	})
@@ -72,4 +72,15 @@ func GetDeliveryByIDRepository(id uint) (schema.Delivery, error) {
 		Preload("DeliveryDetails.TypeCylinder").
 		First(&delivery, id).Error
 	return delivery, err
+}
+
+func GetDeliveriesByUserIDRepository(id uint) ([]schema.Delivery, error) {
+	var deliveries []schema.Delivery
+	db := config.DB
+	err := db.Preload("Order").
+		Preload("Payment").
+		Preload("DeliveryDetails.TypeCylinder").
+		Where("user_id = ?", id).
+		Find(&deliveries, id).Error
+	return deliveries, err
 }

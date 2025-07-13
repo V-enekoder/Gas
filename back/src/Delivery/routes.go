@@ -8,5 +8,6 @@ func RegisterRoutes(router *gin.Engine) {
 		deliveries.POST("/", CreateDeliveryController)
 		deliveries.GET("/", GetAllDeliveriesController)
 		deliveries.GET("/:id", GetDeliveryByIDController)
+		deliveries.GET("/:id/user", GetDeliveriesByUserIDController)
 	}
 }

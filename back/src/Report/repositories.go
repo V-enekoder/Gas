@@ -30,3 +30,23 @@ func GetReportByIDRepository(id uint) (schema.Report, error) {
 		First(&report, id).Error
 	return report, err
 }
+
+func GetReportByUserIDRepository(id uint) ([]schema.Report, error) {
+	var reports []schema.Report
+	db := config.DB
+	err := db.Preload("Delivery").
+		Preload("ReportType").
+		Preload("ReportState").
+		Where("user_id = ?", id).
+		Find(&reports, id).Error
+	return reports, err
+}
+
+func GetPaymentByUserIDRepository(id uint) ([]schema.Payment, error) {
+	var payments []schema.Payment
+	db := config.DB
+	err := db.Preload("PaymentState").
+		Preload("Delivery").
+		Where("user_id = ?", id).Find(&payments).Error
+	return payments, err
+}

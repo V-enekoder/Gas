@@ -8,5 +8,6 @@ func RegisterRoutes(router *gin.Engine) {
 		reports.POST("/", CreateReportController)
 		reports.GET("/", GetAllReportsController)
 		reports.GET("/:id", GetReportByIDController)
+		reports.GET("/:id/user", GetReportByUserIDController)
 	}
 }

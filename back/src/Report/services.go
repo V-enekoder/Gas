@@ -9,6 +9,7 @@ import (
 func mapToReportResponseDTO(r schema.Report) ReportResponseDTO {
 	return ReportResponseDTO{
 		ID:          r.ID,
+		UserID:      r.UserID,
 		Description: r.Description,
 		Date:        r.Date,
 		Delivery: DeliveryInReportResponseDTO{
@@ -28,6 +29,7 @@ func mapToReportResponseDTO(r schema.Report) ReportResponseDTO {
 
 func CreateReportService(dto ReportCreateDTO) (ReportResponseDTO, error) {
 	newReport := schema.Report{
+		UserID:        dto.UserID,
 		DeliveryID:    dto.DeliveryID,
 		Description:   dto.Description,
 		TypeID:        dto.TypeID,
@@ -66,4 +68,18 @@ func GetReportByIDService(id uint) (ReportResponseDTO, error) {
 		return ReportResponseDTO{}, err
 	}
 	return mapToReportResponseDTO(report), nil
+}
+
+func GetReportByUserIDService(id uint) ([]ReportResponseDTO, error) {
+	reports, err := GetReportByUserIDRepository(id)
+	if err != nil {
+		return []ReportResponseDTO{}, err
+	}
+
+	var reportsDTO []ReportResponseDTO
+	for _, r := range reports {
+		reportsDTO = append(reportsDTO, mapToReportResponseDTO(r))
+	}
+
+	return reportsDTO, nil
 }

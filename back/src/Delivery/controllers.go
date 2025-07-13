@@ -62,3 +62,23 @@ func GetDeliveryByIDController(c *gin.Context) {
 
 	c.JSON(http.StatusOK, delivery)
 }
+
+func GetDeliveriesByUserIDController(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		return
+	}
+
+	delivery, err := GetDeliveryByIDService(uint(id))
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Delivery not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve delivery"})
+		return
+	}
+
+	c.JSON(http.StatusOK, delivery)
+}
