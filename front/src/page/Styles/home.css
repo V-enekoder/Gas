@@ -1,0 +1,125 @@
+/* Este archivo CSS define los estilos y el diseño visual para la página de inicio (Home) de la aplicación, incluyendo navegación, secciones principales, tarjetas interactivas y animaciones. */
+
+.home-page-container {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--fruit-salad-50, #f5f9f4);
+  color: var(--fruit-salad-800);
+}
+
+.section-container, .navbar-container, .hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.home-navbar {
+  background-color: #fff;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--fruit-salad-200, #d1e4ce);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-container { display: flex; justify-content: space-between; align-items: center; }
+.navbar-logo { font-size: 24px; font-weight: 700; color: var(--fruit-salad-800); text-decoration: none; }
+.home-navbar nav { display: flex; align-items: center; gap: 15px; }
+.nav-link { color: var(--fruit-salad-700); text-decoration: none; font-weight: 500; }
+.nav-button {
+  background-color: var(--fruit-salad-600);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.nav-button:hover { background-color: var(--fruit-salad-700); }
+
+.hero-section { padding: 80px 0; background-color: var(--fruit-salad-100, #e8f2e6); overflow-x: hidden; }
+.hero-container { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 50px; }
+.hero-content h1 { font-size: 48px; line-height: 1.2; color: var(--fruit-salad-900); margin-bottom: 20px; }
+.hero-content p { font-size: 18px; line-height: 1.6; color: var(--fruit-salad-700); margin-bottom: 30px; }
+.hero-buttons { display: flex; gap: 15px; }
+.btn-primary { background-color: var(--fruit-salad-600); color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
+.btn-secondary { background-color: transparent; border: 2px solid var(--fruit-salad-600); color: var(--fruit-salad-600); padding: 13px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s; }
+.btn-primary:hover, .btn-secondary:hover { transform: translateY(-3px); }
+.btn-secondary:hover { background-color: var(--fruit-salad-600); color: white; }
+.hero-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(43, 63, 40, 0.1); }
+
+.features-section, .products-section { padding: 80px 0; }
+.features-section h2, .products-section h2 { text-align: center; font-size: 36px; color: var(--fruit-salad-900); margin-bottom: 50px; }
+.features-grid, .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+
+.feature-card, .product-card {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(43, 63, 40, 0.05);
+  
+  border: 2px solid transparent;
+  transition: 
+    transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+    box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.25s ease;
+}
+
+.feature-card:hover, .product-card:hover { 
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(43, 63, 40, 0.12);
+  border-color: var(--fruit-salad-400, #81af79);
+}
+
+.feature-icon { font-size: 40px; color: var(--fruit-salad-500); margin-bottom: 20px; }
+.feature-card h3, .product-card h3 { font-size: 22px; margin-bottom: 10px; }
+.feature-card p, .product-card p { color: var(--fruit-salad-700); }
+.product-image { height: 150px; margin-bottom: 20px; }
+.product-image.commercial { filter: hue-rotate(180deg); }
+.product-image.industrial { filter: hue-rotate(-90deg) brightness(1.2); }
+
+.home-footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--fruit-salad-200, #d1e4ce); color: var(--fruit-salad-700); }
+
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+.fade-in {
+  animation: fadeIn 1.2s ease-out 0.2s forwards;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.features-grid .reveal:nth-child(2),
+.products-grid .reveal:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.features-grid .reveal:nth-child(3),
+.products-grid .reveal:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@media (max-width: 992px) {
+  .hero-container { grid-template-columns: 1fr; text-align: center; }
+  .hero-image { order: -1; margin-bottom: 40px; }
+  .hero-buttons { justify-content: center; }
+  .features-grid, .products-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .hero-content h1 { font-size: 36px; }
+  .features-section h2, .products-section h2 { font-size: 28px; }
+  .home-navbar nav { gap: 10px; }
+}

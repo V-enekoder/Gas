@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--careys-pink-100);
+  color: var(--careys-pink-950);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Paleta de Colores  */
+  --fruit-salad-50: #f5f9f4;
+  --fruit-salad-100: #e8f2e6;
+  --fruit-salad-200: #d1e4ce;
+  --fruit-salad-300: #adcea7;
+  --fruit-salad-400: #81af79;
+  --fruit-salad-500: #609457;
+  --fruit-salad-600: #4a7643;
+  --fruit-salad-700: #3c5e37;
+  --fruit-salad-800: #334c2f;
+  --fruit-salad-900: #2b3f28;
+  --fruit-salad-950: #142112;
+
+
+  /* Variables de Diseño */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+  --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
