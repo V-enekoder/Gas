@@ -30,7 +30,13 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.Use(cors.Default())
+	configCORS := cors.DefaultConfig()
+	configCORS.AllowOrigins = []string{"http://localhost:5173"}
+	configCORS.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"}
+	configCORS.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+	configCORS.AllowCredentials = true
+	r.Use(cors.New(configCORS))
+
 	r.SetTrustedProxies(nil)
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
