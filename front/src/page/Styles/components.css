@@ -1,0 +1,168 @@
+/* Este archivo CSS contiene los estilos para la página de detalles de la orden, el recibo de entrega y los componentes modales de la aplicación. */
+
+.order-detail-card {
+  padding: 30px; 
+}
+
+.detail-section {
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--fruit-salad-100);
+  padding-bottom: 20px;
+}
+.detail-section:last-child {
+  border-bottom: none; 
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.detail-section h2 {
+  font-size: 24px;
+  color: var(--fruit-salad-800);
+  margin-bottom: 20px;
+  text-align: left; 
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  background-color: var(--fruit-salad-100, #e8f2e6);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--fruit-salad-800);
+}
+
+.detail-item span {
+  font-size: 14px;
+  color: var(--fruit-salad-700);
+}
+
+.detail-item strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fruit-salad-900);
+}
+
+.detail-item svg {
+  font-size: 20px;
+  color: var(--fruit-salad-500);
+  margin-bottom: 5px;
+}
+
+.order-details-table {
+  background-color: transparent; 
+  box-shadow: none; 
+}
+.order-details-table thead th, 
+.order-details-table tbody td {
+  padding: 12px 0; 
+}
+
+.payment-action-section {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--fruit-salad-100);
+}
+.payment-action-section p {
+  color: var(--fruit-salad-700);
+  margin-bottom: 20px;
+}
+
+.receipt-container {
+  padding: 20px;
+}
+
+.receipt-card {
+  background: white;
+  padding: 30px;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.receipt-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.receipt-table th, .receipt-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.receipt-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.description-box {
+  background-color: var(--fruit-salad-50, #f4f9f4);
+  border: 1px solid var(--fruit-salad-100, #e0ede0);
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: var(--fruit-salad-800);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-container {
+  background: #fff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-title {
+  font-size: 24px;
+  color: var(--fruit-salad-800);
+  margin-bottom: 5px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
