@@ -72,7 +72,7 @@ export const deliveryService = {
 
 export const reportService = {
     // Obtiene reportes por ID de usuario.
-    getByUserId: (userId) => apiClient.get(`/reports/${userId}/user`),
+    getByUserId: (userId) => apiClient.get(`/reports/user/${userId}`),
     // Obtiene todos los tipos de reporte.
     getReportTypes: () => apiClient.get('/report-types/'),
     // Obtiene todos los estados de reporte.
