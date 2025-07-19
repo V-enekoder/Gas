@@ -70,15 +70,16 @@ func GetDeliveriesByUserIDController(c *gin.Context) {
 		return
 	}
 
-	delivery, err := GetDeliveryByIDService(uint(id))
+	deliveries, err := GetDeliveriesByUserIDService(uint(id))
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Delivery not found"})
-			return
-		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve delivery"})
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "No deliveries found for this user"})
 		return
 	}
+	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve deliveries"})
+	return
+}
 
-	c.JSON(http.StatusOK, delivery)
+c.JSON(http.StatusOK, deliveries)
+
 }

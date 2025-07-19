@@ -31,17 +31,18 @@ func GetReportByIDRepository(id uint) (schema.Report, error) {
 	return report, err
 }
 
-func GetReportByUserIDRepository(id uint) ([]schema.Report, error) {
+func GetReportByUserIDRepository(userID uint) ([]schema.Report, error) {
 	var reports []schema.Report
 	db := config.DB
+
 	err := db.Preload("Delivery").
 		Preload("ReportType").
 		Preload("ReportState").
-		Where("user_id = ?", id).
-		Find(&reports, id).Error
+		Where("user_id = ?", userID).
+		Find(&reports).Error
+
 	return reports, err
 }
-
 func GetPaymentByUserIDRepository(id uint) ([]schema.Payment, error) {
 	var payments []schema.Payment
 	db := config.DB

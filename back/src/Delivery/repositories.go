@@ -74,13 +74,18 @@ func GetDeliveryByIDRepository(id uint) (schema.Delivery, error) {
 	return delivery, err
 }
 
-func GetDeliveriesByUserIDRepository(id uint) ([]schema.Delivery, error) {
+func GetDeliveriesByUserIDRepository(userID uint) ([]schema.Delivery, error) {
 	var deliveries []schema.Delivery
 	db := config.DB
-	err := db.Preload("Order").
+
+	err := db.
+		Joins("JOIN orders ON orders.id = deliveries.order_id").
+		Where("orders.user_id = ?", userID).
+		Preload("Order").
 		Preload("Payment").
 		Preload("DeliveryDetails.TypeCylinder").
-		Where("user_id = ?", id).
-		Find(&deliveries, id).Error
+		Find(&deliveries).Error
+
 	return deliveries, err
 }
+

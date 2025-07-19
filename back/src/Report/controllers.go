@@ -63,15 +63,12 @@ func GetReportByUserIDController(c *gin.Context) {
 		return
 	}
 
-	report, err := GetReportByUserIDService(uint(id))
+	reports, err := GetReportByUserIDService(uint(id))
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Report not found"})
-			return
-		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve report"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve reports"})
 		return
 	}
 
-	c.JSON(http.StatusOK, report)
+	c.JSON(http.StatusOK, reports)
 }
+
