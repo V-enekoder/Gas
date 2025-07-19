@@ -12,6 +12,8 @@ import Deliveries from '../page/deliveries/Deliveries';
 import CreateReport from '../page/components/CreateReport';
 import Reports  from '../page/reports/Reports';
 import Home from '../page/Home/Home';
+import OrderDetail from '../page/components/OrderDetail';
+import DeliveryReceipt from '../page/components/DeliveryReceipt';
 
 export const AppRouter = () => {
     return (
@@ -28,6 +30,8 @@ export const AppRouter = () => {
                 <Route path="/deliveries" element={<Deliveries />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/reports/new" element={<CreateReport />} />
+                 <Route path="/orders/:orderId" element={<OrderDetail />} />
+                 <Route path="/deliveries/:id" element={<DeliveryReceipt />} />
             </Route>
         </Routes>
     );
