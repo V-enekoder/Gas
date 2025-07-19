@@ -94,9 +94,6 @@ const Dashboard = () => {
                 {recentDeliveries.map(delivery => (
                   <li key={delivery.id}>
                     Entrega DEL-{delivery.id}
-                    <span className="card-date-info">
-                      {new Date(delivery.payment.date).toLocaleDateString()}
-                    </span>
                   </li>
                 ))}
               </ul>
@@ -111,7 +108,7 @@ const Dashboard = () => {
             recentReports.length > 0 ? (
               <ul>
                 {recentReports.map(report => (
-                  <li key={report.id}>
+                  <li key={report.id} >
                     Reporte REP-{report.id}
                     <span className={`status-badge-sm status-${report.report_state.name.toLowerCase().replace(' ', '-')}`}>
                       {report.report_state.name}
