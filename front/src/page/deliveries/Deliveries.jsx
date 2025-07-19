@@ -19,20 +19,21 @@ const Deliveries = () => {
         setIsLoading(false);
         return;
       }
-
       setIsLoading(true);
 
       try {
         const response = await deliveryService.getByUserId(user.id);
-        
+
         if (Array.isArray(response.data)) {
           setDeliveries(response.data);
+        } else if (response.data && typeof response.data === 'object' && response.data.id) {
+          setDeliveries([response.data]);
         } else {
           setDeliveries([]);
         }
 
       } catch (error) {
-        console.error("Error al obtener las entregas:", error);
+        console.error("Error al obtener las entregas (Backend Error):", error);
         setDeliveries([]);
       } finally {
         setIsLoading(false);
@@ -42,11 +43,6 @@ const Deliveries = () => {
     fetchUserDeliveries();
   }, [user]);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('es-ES', options);
-  };
 
   if (isLoading) {
     return <div className="loading-spinner">Cargando tus entregas...</div>;
@@ -55,7 +51,7 @@ const Deliveries = () => {
   if (deliveries.length === 0) {
     return (
       <div className="empty-state">
-        <FaShippingFast size={50} style={{ marginBottom: '20px', color: 'var(--fruit-salad-400)' }}/>
+        <FaShippingFast size={50} style={{ marginBottom: '20px', color: 'var(--fruit-salad-400)' }} />
         <h2>No tienes entregas registradas</h2>
         <p>Cuando uno de tus pedidos sea despachado, aparecerá aquí.</p>
         <Link to="/orders" className="btn-main-action">Ver mis pedidos</Link>
@@ -76,7 +72,6 @@ const Deliveries = () => {
             <tr>
               <th>ID de Entrega</th>
               <th>ID de Orden</th>
-              <th>Fecha del Pago</th>
               <th>Total</th>
               <th>Acciones</th>
             </tr>
@@ -86,7 +81,6 @@ const Deliveries = () => {
               <tr key={delivery.id}>
                 <td><span className="order-id-highlight">DEL-{delivery.id}</span></td>
                 <td>ORD-{delivery.order.id}</td>
-                <td>{formatDate(delivery.payment.date)}</td>
                 <td>${delivery.total_price.toFixed(2)}</td>
                 <td>
                   <Link to={`/deliveries/${delivery.id}`} className="action-btn">
