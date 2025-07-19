@@ -6,11 +6,13 @@ import { FaEye, FaPlus, FaFileMedicalAlt } from 'react-icons/fa';
 import '../Styles/dashboard.css';
 import { useAuth } from '../../context/AuthContext'
 import { reportService } from '../../services/ApiServices';
-
+import ReportDetailsModal from '../components/ReportDetailsModal';
 
 const Reports = () => {
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedReport, setSelectedReport] = useState(null);
+
   const { user } = useAuth();
 
   useEffect(() => {
@@ -43,6 +45,12 @@ const Reports = () => {
 
   return (
     <div className="dashboard-content">
+      {selectedReport && (
+        <ReportDetailsModal
+          report={selectedReport}
+          onClose={() => setSelectedReport(null)}
+        />
+      )}
       <header className="dashboard-header-with-action">
         <div>
           <h1>Mis Reportes</h1>
@@ -52,7 +60,7 @@ const Reports = () => {
           <FaPlus /> Crear Nuevo Reporte
         </Link>
       </header>
-      
+
       {reports.length === 0 ? (
         <div className="empty-state">
           <FaFileMedicalAlt size={50} style={{ marginBottom: '20px', color: 'var(--fruit-salad-400)' }} />
@@ -83,9 +91,14 @@ const Reports = () => {
                     </span>
                   </td>
                   <td>
-                    <Link to={`/reports/${report.id}`} className="action-btn">
+                    <Link
+                      to="#"
+                      onClick={() => setSelectedReport(report)}
+                      className="action-btn"
+                    >
                       <FaEye /> Ver Detalles
                     </Link>
+
                   </td>
                 </tr>
               ))}
