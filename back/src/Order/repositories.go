@@ -57,3 +57,14 @@ func GetOrdersByUserIDRepository(userID uint) ([]schema.Order, error) {
 
 	return orders, err
 }
+
+func UpdateOrderStateRepository(orderID uint, newStateID uint) error {
+	db := config.DB
+
+	result := db.Model(&schema.Order{}).Where("id = ?", orderID).Update("state_order_id", newStateID)
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return result.Error
+}

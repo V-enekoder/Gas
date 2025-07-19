@@ -131,3 +131,15 @@ func GetOrdersByUserIDService(id uint) ([]OrderResponseDTO, error) {
 
 	return ordersDTO, nil
 }
+
+func UpdateOrderStateService(orderID uint) (OrderResponseDTO, error) {
+	err := UpdateOrderStateRepository(orderID, 5)
+	if err != nil {
+		return OrderResponseDTO{}, err
+	}
+	updatedOrder, err := GetOrderByIDRepository(orderID)
+	if err != nil {
+		return OrderResponseDTO{}, err
+	}
+	return mapToOrderResponseDTO(updatedOrder), nil
+}

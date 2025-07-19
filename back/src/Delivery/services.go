@@ -3,6 +3,7 @@ package delivery
 import (
 	"errors"
 
+	order "github.com/V-enekoder/GasManager/src/Order"
 	"github.com/V-enekoder/GasManager/src/schema"
 	"gorm.io/gorm"
 )
@@ -77,12 +78,6 @@ func CreateDeliveryService(dto DeliveryCreateDTO) (DeliveryResponseDTO, error) {
 		})
 	}
 
-	// Preparar el pago asociado al Delivery
-	/*newPayment := schema.Payment{
-		Quantity: newDelivery.TotalPrice,
-		StateID:  DefaultPaymentStateID,
-	}*/
-
 	// Crear todo en una transacción
 	if err := CreateDeliveryRepository(&newDelivery); err != nil {
 		return DeliveryResponseDTO{}, err
@@ -93,6 +88,8 @@ func CreateDeliveryService(dto DeliveryCreateDTO) (DeliveryResponseDTO, error) {
 	if err != nil {
 		return DeliveryResponseDTO{}, err
 	}
+
+	_, err = order.UpdateOrderStateService(sourceOrder.ID)
 
 	return mapToDeliveryResponseDTO(createdDelivery), nil
 }
