@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import { orderService, paymentService, deliveryService  } from '../../services/ApiServices'
 import { FaCheckCircle } from 'react-icons/fa';
 
+
 const Payment = () => {
     const { orderId } = useParams();
     const navigate = useNavigate();
@@ -51,13 +52,14 @@ const Payment = () => {
                 payment_id: createdPayment.id,
             };
             await deliveryService.create(deliveryPayload);
-            
-            alert("¡Pago registrado y entrega programada con éxito!");
-            navigate('/deliveries');
+
+            alert("¡Pago registrado y entrega programada con éxito! El estado de la orden se ha actualizado.");
+            navigate('/orders'); 
 
         } catch (err) {
             const errorMessage = err.response?.data?.error || "Ocurrió un error en el proceso.";
             setError(errorMessage);
+            console.error("Error en el flujo de pago/entrega:", err.response || err.message);
         } finally {
             setIsLoading(false);
         }
