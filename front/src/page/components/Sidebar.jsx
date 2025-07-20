@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaBoxOpen, FaTruck, FaFileAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaBoxOpen, FaTruck, FaFileAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import '../Styles/dashboard.css';
-
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
@@ -28,6 +27,7 @@ const Sidebar = () => {
           <li><NavLink to="/orders"><FaBoxOpen /> Órdenes</NavLink></li>
           <li><NavLink to="/deliveries"><FaTruck /> Entregas</NavLink></li>
           <li><NavLink to="/reports"><FaFileAlt /> Reportes</NavLink></li>
+          <li><NavLink to="/my-data"><FaUser /> Mis Datos</NavLink></li>
         </ul>
       </nav>
       <div className="sidebar-footer">

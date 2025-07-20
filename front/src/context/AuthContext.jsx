@@ -16,11 +16,22 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     localStorage.setItem('authToken', userData.token);
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser({
+
+    const fullUser = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      role: userData.role,
+      role_data: userData.role_data || null,
+      municipality: userData.municipality || null,
+      profileCompleted: userData.profileCompleted ?? true, 
       isAuthenticated: true,
-      ...userData,
-    });
+      token: userData.token 
+    };
+
+    localStorage.setItem('user', JSON.stringify(fullUser));
+
+    setUser(fullUser);
   };
 
   const logout = () => {

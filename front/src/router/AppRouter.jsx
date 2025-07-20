@@ -14,6 +14,8 @@ import Reports  from '../page/reports/Reports';
 import Home from '../page/Home/Home';
 import OrderDetail from '../page/components/OrderDetail';
 import DeliveryReceipt from '../page/components/DeliveryReceipt';
+import DataUser from '../page/DataUser/DataUser';
+
 
 export const AppRouter = () => {
     return (
@@ -32,6 +34,7 @@ export const AppRouter = () => {
                 <Route path="/reports/new" element={<CreateReport />} />
                  <Route path="/orders/:orderId" element={<OrderDetail />} />
                  <Route path="/deliveries/:id" element={<DeliveryReceipt />} />
+                 <Route path="/my-data" element={<DataUser />} />
             </Route>
         </Routes>
     );

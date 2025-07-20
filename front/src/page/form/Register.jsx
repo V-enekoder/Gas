@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService, municipalityService } from '../../services/ApiServices';
 import { useAuth } from '../../context/AuthContext';
 import '../Styles/form.css';
-import { FaUser, FaStore, FaUsers, FaWheelchair, FaUserCircle, FaEnvelope, FaLock, FaMapMarkerAlt, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaUser, FaStore, FaUsers, FaWheelchair, FaUserCircle, FaEnvelope, FaLock, FaMapMarkerAlt, FaEye, FaEyeSlash, FaHome } from 'react-icons/fa';
 
 
 const roleOptions = [
@@ -154,7 +154,7 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <input type={showPassword ? "text" : "password"} id="password" className="form-input" placeholder=" "value={password}
+            <input type={showPassword ? "text" : "password"} id="password" className="form-input" placeholder=" " value={password}
               onChange={handlePasswordChange} required disabled={isLoading} />
             <label htmlFor="password" className="form-label">Contraseña</label>
             <FaLock className="input-icon" />
@@ -214,6 +214,10 @@ const Register = () => {
           <Link to="/login">Inicia sesión aquí</Link>
         </div>
       </div>
+      <button onClick={() => navigate('/')} className="floating-home-btn">
+        <FaHome />
+      </button>
+
     </div>
   );
 };

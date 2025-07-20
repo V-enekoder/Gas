@@ -27,6 +27,11 @@ export const authService = {
     register: (userData) => apiClient.post('/users/register', userData),
 };
 
+export const userService = {
+    // Obtiene el perfil del usuario por ID (usando GET /users/:id)
+    getProfileById: (userId) => apiClient.get(`/users/${userId}`),
+};
+
 export const profileService = {
     // Completa el perfil de un comercio.
     completeCommerceProfile: (data) => apiClient.post('/commerces/', data),
@@ -48,7 +53,6 @@ export const orderService = {
     getById: (orderId) => apiClient.get(`/orders/${orderId}`),
     // Obtiene órdenes por ID de usuario.
     getByUserId: (userId) => apiClient.get(`/orders/${userId}/user`),
-
 };
 
 export const cylinderService = {

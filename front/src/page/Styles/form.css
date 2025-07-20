@@ -278,3 +278,27 @@
   padding-left: 45px; 
   text-align: left;
 }
+
+.floating-home-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--fruit-salad-500, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.floating-home-btn:hover {
+  background-color: var(--fruit-salad-700, #388e3c);
+}

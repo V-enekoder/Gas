@@ -1,6 +1,7 @@
 // Este componente de React renderiza un modal que solicita a usuarios con roles específicos completar su perfil con información adicional, enviando los datos a la API correspondiente para su verificación.
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import '../Styles/dashboard.css';
 import { profileService } from '../../services/ApiServices';
@@ -8,6 +9,8 @@ import { FaIdCard, FaBuilding, FaUser, FaNotesMedical } from 'react-icons/fa';
 
 const CompleteProfileModal = () => {
     const { user, completeProfile } = useAuth();
+    const navigate = useNavigate();
+
     
     const [formData, setFormData] = useState({});
     const [error, setError] = useState(null);
@@ -41,12 +44,12 @@ const CompleteProfileModal = () => {
                     await profileService.completeDisabledProfile(payload);
                     break;
                 default:
-                    // Si el rol es 'user' (que no debería mostrar el modal) o desconocido, no hacemos nada.
                     break;
             }
 
             alert("¡Perfil completado con éxito!");
             completeProfile(); 
+            navigate('/login');
 
         } catch (err) {
             const errorMessage = err.response?.data?.error || 'No se pudo guardar la información.';
@@ -103,10 +106,9 @@ const CompleteProfileModal = () => {
                             <FaIdCard className="input-icon" />
                         </div>
                         <div className="form-group">
-                            {/* TextArea también puede usar form-input y form-label, aunque no 'placeholder=" "' */}
                             <textarea id="disability" name="disability" className="form-input" rows="3" placeholder=" " onChange={handleChange} required></textarea>
                             <label htmlFor="disability" className="form-label">Descripción de la Discapacidad</label>
-                            <FaNotesMedical className="input-icon" /> {/* Icono para la discapacidad */}
+                            <FaNotesMedical className="input-icon" /> 
                         </div>
                     </>
                 );
