@@ -50,7 +50,7 @@ Modo de Uso
 
 1. Clonar el repositorio:
 ```sh
-❯ git clone https://github.com/V-enekoder/HiringGroup.git
+❯ git clone https://github.com/V-enekoder/Gas.git
 ```
 
 2. Navegar al directorio del proyecto:
